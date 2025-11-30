@@ -1,0 +1,223 @@
+### A. Créer un Utilisateur Gérant (POST - F5)
+
+POST http://localhost:5000/api/utilisateurs
+Content-Type: application/json
+
+{
+    "nom": "AdminGérant1",
+    "role": "Gérant",
+    "motDePasse": "securemdp"
+}
+# -> COPIER L'ID DE LA RÉPONSE (AdminGérantId)
+
+### B. Créer un Serveur (POST - F5)
+POST http://localhost:5000/api/utilisateurs
+Content-Type: application/json
+
+{
+    "nom": "Serveur1",
+    "role": "Serveur",
+    "motDePasse": "service"
+}
+# -> COPIER L'ID DE LA RÉPONSE (Serveur1Id)
+
+### C. Créer un Plat (POST - F1)
+POST http://localhost:5000/api/plats
+Content-Type: application/json
+
+{
+    "nom": "Soupe",
+    "prix": 6.50,
+    "catégorie": "Entrée"
+}
+# -> COPIER L'ID DE LA RÉPONSE (Plat1Id)
+
+### D. Créer un Deuxième Plat (POST - F1)
+POST http://localhost:5000/api/plats
+Content-Type: application/json
+
+{
+    "nom": "Filet ",
+    "prix": 32.00,
+    "catégorie": "Plat"
+}
+# -> COPIER L'ID DE LA RÉPONSE (Plat2Id)
+
+### E. Créer une Commande (POST - F2)
+# REMPLACER les placeholders: Server1Id, Plat1Id, Plat2Id
+POST http://localhost:5000/api/commandes
+Content-Type: application/json
+
+{
+    "numeroTable": 12,
+    "serveurId": "Server1Id", 
+    "items": [
+        {
+            "platId": "Plat1Id", 
+            "quantite": 2 
+        },
+        {
+            "platId": "Plat2Id", 
+            "quantite": 1 
+        }
+    ]
+}
+
+
+### F. Marquer la Commande comme Servie (PUT - F3)
+# REMPLACER Commande1Id
+PUT http://localhost:5000/api/commandes/Commande1Id/statut
+Content-Type: application/json
+
+{
+    "statut": "Servie"
+}
+
+### G. Marquer la Commande comme Payée (PUT - F4)
+# REMPLACER Commande1Id. Ceci génère les données pour le CA (F6) et le temps de service (F8)
+PUT http://localhost:5000/api/commandes/Commande1Id/statut
+Content-Type: application/json
+
+{
+    "statut": "Payée"
+}
+
+### 1. VÉRIFICATION DU SERVEUR
+GET http://localhost:5000/
+Content-Type: application/json
+
+### ----------------------------------------------------
+### PHASE 1 : CRÉATION DES DONNÉES (CRUD)
+### ----------------------------------------------------
+
+### A. Créer un Utilisateur Serveur (F5)
+# Nécessaire pour passer la commande
+POST http://localhost:5000/api/utilisateurs
+Content-Type: application/json
+
+{
+    "nom": "ServeurMoh",
+    "role": "Serveur",
+    "motDePasse": "service123"
+}
+
+
+### B. Créer des Plats (F1)
+# Nécessaire pour passer la commande
+POST http://localhost:5000/api/plats
+Content-Type: application/json
+
+{
+    "nom": "Steak Frites",
+    "prix": 25.00,
+    "catégorie": "Plat",
+    "disponible": true
+}
+
+
+### B.2 Créer un Dessert (F1)
+POST http://localhost:5000/api/plats
+Content-Type: application/json
+
+{
+    "nom": "Mousse au Chocolat",
+    "prix": 8.00,
+    "catégorie": "Dessert",
+    "disponible": true
+}
+
+
+### C. Créer la Première Commande (F2)
+
+POST http://localhost:5000/api/commandes
+Content-Type: application/json
+
+{
+    "numeroTable": 10,
+    "serveurId": "[ID_SERVEUR_MOH]", 
+    "items": [
+        {
+            "platId": "[ID_PLAT_STEAK]", 
+            "quantite": 2 
+        },
+        {
+            "platId": "[ID_PLAT_MOUSSE]", 
+            "quantite": 1 
+        }
+    ]
+}
+
+
+### D. Mettre la Commande à Servie (F3)
+# Remplacer [ID_COMMANDE_1]
+PUT http://localhost:5000/api/commandes/[ID_COMMANDE_1]/statut
+Content-Type: application/json
+
+{
+    "statut": "Servie"
+}
+
+### E. Mettre la Commande à Payée (F4 - CLOTURE DE LA TRANSACTION)
+PUT http://localhost:5000/api/commandes/[ID_COMMANDE_1]/statut
+Content-Type: application/json
+
+{
+    "statut": "Payée"
+}
+
+### ----------------------------------------------------
+### PHASE 2 : TEST DES AGRÉGATIONS (F6 à F10)
+### ----------------------------------------------------
+
+### F. Test F6: Chiffre d'Affaires total (Calcul du CA de la commande)
+GET http://localhost:5000/api/stats/chiffre-affaires
+
+### G. Test F7: Plats les Plus Populaires (Vérifier si "Steak Frites" apparaît)
+GET http://localhost:5000/api/stats/popular-plats
+
+### H. Test F8: Temps de Service Moyen (Doit retourner une valeur)
+GET http://localhost:5000/api/stats/avg-service-time
+
+### I. Test F9: Performance des Serveurs (Vérifier le CA généré par Lucie)
+GET http://localhost:5000/api/stats/server-performance
+
+### J. Test F10: Ventes par Catégorie (Vérifier si "Plat" et "Dessert" apparaissent)
+GET http://localhost:5000/api/stats/sales-by-category
+
+
+### ----------------------------------------------------
+### PHASE "" : Tester authentification
+### ----------------------------------------------------
+
+###
+# 1) INSCRIPTION (REGISTER)
+POST http://localhost:5000/api/utilisateurs
+Content-Type: application/json
+
+{
+  "nom": "AdminGerant1",
+  "role": "Gérant",
+  "motDePasse": "mdp123"
+}
+
+###
+# 2) CONNEXION (LOGIN)
+POST http://localhost:5000/api/utilisateurs/login
+Content-Type: application/json
+
+{
+  "nom": "AdminGerant1",
+  "motDePasse": "mdp123"
+}
+
+###
+# IMPORTANT :
+# Copie le token renvoyé par le login
+# Et remplace TON_TOKEN_ICI ci-dessous
+# Exemple : Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###
+# 3) TEST — ROUTE PROTÉGÉE (Gérant seulement)
+GET http://localhost:5000/api/utilisateurs
+Authorization: Bearer TON_TOKEN_ICI
+Content-Type: application/json
