@@ -11,6 +11,7 @@ import axiosClient from "../api/axiosClient";
 
 export default function CommandesPage() {
   const [commandes, setCommandes] = useState([]);
+  const [plats, setPlats] = useState([]);
 
   const loadData = async () => {
     const resPlats = await axiosClient.get("/plats");
