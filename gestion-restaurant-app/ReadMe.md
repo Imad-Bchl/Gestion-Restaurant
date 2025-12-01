@@ -1,7 +1,6 @@
 # Gestion de Restaurant 
 
-Application full-stack de gestion de restaurant permettant de gérer les utilisateurs, les plats, les commandes et les statistiques, avec un backend Node.js/Express et un frontend React/Vite. [web:30]
-
+Application full-stack de gestion de restaurant permettant de gérer les utilisateurs, les plats, les commandes et les statistiques, avec un backend Node.js/Express et un frontend React/Vite.
 ---
 
 ## Fonctionnalités
@@ -24,7 +23,7 @@ Application full-stack de gestion de restaurant permettant de gérer les utilisa
   - Temps moyen de service
   - Performances des serveurs
   - Ventes par catégorie
-- UI moderne avec React + Material UI et navigation dynamique selon le rôle utilisateur. [web:32]
+- UI moderne avec React + Material UI et navigation dynamique selon le rôle utilisateur.
 
 ---
 
@@ -38,7 +37,7 @@ Application full-stack de gestion de restaurant permettant de gérer les utilisa
 - JWT
 - Bcrypt
 - Dotenv
-- Nodemon [web:33]
+- Nodemon
 
 ### Frontend
 
@@ -47,7 +46,7 @@ Application full-stack de gestion de restaurant permettant de gérer les utilisa
 - Axios
 - Material UI
 - React Router DOM
-- Context API [web:33]
+- Context API
 
 ---
 
@@ -72,13 +71,12 @@ gestion-restaurant-app/
     │   └── main.jsx     # Point d'entrée React
     └── vite.config.js
 ```
-[web:30]
 
 ---
 
 ##  Installation & lancement
 
-Prérequis : Node.js installé sur votre machine. [web:34]
+Prérequis : Node.js installé sur votre machine.
 
 ### 1 Backend
 
@@ -89,7 +87,7 @@ npm start
 ```
 
 Par défaut, le backend tourne sur :  
-http://localhost:5000 [web:34]
+http://localhost:5000 
 
 ### 2 Frontend
 
@@ -100,7 +98,7 @@ npm run dev
 ```
 
 Par défaut, le frontend tourne sur :  
-http://localhost:5173 [web:34]
+http://localhost:5173
 
 ---
 
@@ -115,7 +113,7 @@ http://localhost:5173 [web:34]
   - Ne voit que ses propres commandes
 - Cuisinier
   - Accède uniquement aux commandes "En Préparation"
-  - Peut marquer une commande comme "Prête" [web:32]
+  - Peut marquer une commande comme "Prête" 
 
 ---
 
@@ -155,13 +153,12 @@ GET /api/stats/avg-service-time    # Temps moyen de service
 GET /api/stats/server-performance  # Performances des serveurs
 GET /api/stats/sales-by-category   # Ventes par catégorie
 ```
-[web:30]
 
 ---
 
 ## Statistiques (MongoDB Aggregation)
 
-Les pipelines d’agrégation MongoDB permettent notamment de : [web:32]
+Les pipelines d’agrégation MongoDB permettent notamment de :
 
 - Calculer le chiffre d’affaires total
 - Identifier les plats les plus vendus
