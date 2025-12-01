@@ -1,4 +1,3 @@
-```md
 # Gestion de Restaurant 
 
 Application full-stack de gestion de restaurant permettant de gérer les utilisateurs, les plats, les commandes et les statistiques, avec un backend Node.js/Express et un frontend React/Vite. [web:30]
@@ -178,4 +177,3 @@ Les pipelines d’agrégation MongoDB permettent notamment de : [web:32]
 - Gestion avancée des erreurs et des logs
 - Internationalisation (i18n)
 - Gestion des réservations de tables [web:33]
-```
